@@ -5,10 +5,12 @@ If you need to track a user's location in background this plugin does exactly th
 
 #Installing the plugin
 
+Copy <code>BGLocationTrackingPlugin.h</code> and <code>BGLocationTrackingPlugin.m</code> files to your Classes folder and <code>BGLocationTrackingPlugin.js</code> file to www/js folder.
+
 Add js file to your index.html. Then add the following code to your config.xml:
 
-	<feature name="BGLocationTrackingPlugin">
-		<param name="ios-package" value="BGLocationTrackingPlugin" />
+	<feature name="BGLocationTracking">
+		<param name="ios-package" value="BGLocationTracking" />
 		<param name="onload" value="true" />
 	</feature>
 

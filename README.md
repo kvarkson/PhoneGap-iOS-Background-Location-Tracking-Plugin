@@ -15,7 +15,7 @@ Add js file to your index.html. Then add the following code to your config.xml
 
 When the apps recives <code>Pause</code> event you need to call <code>startTraking()</code> function. 
 
-After getting <code>Resume</code> event just call <code>stopTraking</code>
+After getting <code>Resume</code> event just call <code>stopTraking()</code>
 
 #License
 

@@ -3,25 +3,24 @@ PhoneGap-iOS-Background-Location-Tracking-Plugin
 
 #Installing the plugin
 
-Add js file to your index.html. Then add the following code to your config.xml
+Add js file to your index.html. Then add the following code to your config.xml:
 
-<code><feature name="BGLocationTrackingPlugin">
-    <param name="ios-package" value="BGLocationTrackingPlugin" />
-     <param name="onload" value="true" />
-</feature>
-</code>
+	<feature name="BGLocationTrackingPlugin">
+		<param name="ios-package" value="BGLocationTrackingPlugin" />
+		<param name="onload" value="true" />
+	</feature>
 
 #Using the plugin
 
 When the apps recives <code>Pause</code> event you need to call <code>startTraking()</code> function. 
 
-After getting <code>Resume</code> event just call <code>stopTraking()</code>
+After getting <code>Resume</code> event just call <code>stopTraking()</code> function.
 
 #License
 
 The MIT License
 
-Copyright (c) 2011 Stas Gorodnichenko, Alex Shmaliy
+Copyright (c) 2012 Stas Gorodnichenko, Alex Shmaliy
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

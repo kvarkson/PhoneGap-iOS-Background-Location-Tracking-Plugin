@@ -1,6 +1,8 @@
 PhoneGap-iOS-Background-Location-Tracking-Plugin
 ================================================
 
+If you need to track a user's location in background this plugin does exactly that.
+
 #Installing the plugin
 
 Add js file to your index.html. Then add the following code to your config.xml:
@@ -20,7 +22,7 @@ After getting <code>Resume</code> event just call <code>stopTraking()</code> fun
 
 The MIT License
 
-Copyright (c) 2012 Stas Gorodnichenko, Alex Shmaliy
+Copyright (c) 2013 Stas Gorodnichenko, Alex Shmaliy
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

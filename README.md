@@ -1,7 +1,7 @@
 PhoneGap-iOS-Background-Location-Tracking-Plugin
 ================================================
 
-If you need to track a user's location in background this plugin does exactly that.
+If you need to track a user's location in background this plugin does exactly that. The location updates with accuracy: kCLLocationAccuracyNearestTenMeters and distanceFilter = 10.0 (in meters). Baically the plugin will return new location any 10 meters. 
 
 #Installing the plugin
 
@@ -19,7 +19,7 @@ Add js file to your index.html. Then add the following code to your config.xml:
 When the apps recives <code>Pause</code> event you need to call <code>startUpdatingLocation()</code> function. 
 ######Example
 	function onPause() {
-		startUpdatingLocation('yourCallbackFunction');	
+		startUpdatingLocation(yourCallbackFunction);	
 	}
 
 	function yourCallbackFunction( result ) {
@@ -27,7 +27,7 @@ When the apps recives <code>Pause</code> event you need to call <code>startUpdat
 		console.log( result.coords.longitude );
 	}
 
-NOTE: The string name of the callback function soon will be replace with it regular signature.
+You can specify the callback by name or just pass an anonymous function. It will work fine either way.
 
 After getting <code>Resume</code> event just call <code>stopUpdatingLocation()</code> function.
 

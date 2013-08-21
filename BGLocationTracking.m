@@ -10,7 +10,7 @@
 
 @interface BGLocationTracking ()
 
-- (void)reInitAndStartLocationManager;
+- (void)initAndStartLocationManager;
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) CDVInvokedUrlCommand *successCB;
@@ -22,7 +22,7 @@
 @synthesize locationManager, delegate, successCB;
 
 - (void)startUpdatingLocation:(CDVInvokedUrlCommand *)command {
-    [self reInitAndStartLocationManager];
+    [self initAndStartLocationManager];
     self.successCB = [command.arguments objectAtIndex:0];
 }
 
@@ -36,13 +36,15 @@
     }
 }
 
-- (void)reInitAndStartLocationManager {
+- (void)initAndStartLocationManager {
     
     [self stopUpdatingLocation:[[CDVInvokedUrlCommand alloc] init]];
     
     self.locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
     locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+    locationManager.distanceFilter = 10.0;
+    locationManager.activityType = CLActivityTypeFitness;
     [locationManager startUpdatingLocation];
 }
 
@@ -52,11 +54,6 @@
     
     [self callSuccessJSCalback:newLocation.coordinate.latitude :newLocation.coordinate.longitude];
     
-    // stop location manager
-    [self stopUpdatingLocation:[[CDVInvokedUrlCommand alloc] init]];
-    
-    // TODO: need to re-init location manager with some delay
-    [self reInitAndStartLocationManager];
 }
 
 - (void)callSuccessJSCalback:(double)lat :(double)lon {
@@ -65,13 +62,12 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    //NSLog(@"didFailWithError: %@", error);
     
     [self.delegate locationDidFailWithError:error];
-
+    NSLog(@"%@", error);
     [self stopUpdatingLocation:[[CDVInvokedUrlCommand alloc] init]];
     
-    [self reInitAndStartLocationManager];
+    [self initAndStartLocationManager];
 }
 
 @end

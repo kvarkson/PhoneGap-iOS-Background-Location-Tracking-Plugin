@@ -5,7 +5,7 @@ If you need to track a user's location in background this plugin does exactly th
 
 #Installing the plugin
 
-Copy <code>BGLocationTrackingPlugin.h</code> and <code>BGLocationTrackingPlugin.m</code> files to your <code>Classes</code> folder and <code>BGLocationTrackingPlugin.js</code> file to <code>www/js</code> folder.
+Copy <code>BGLocationTrackingPlugin.h</code> and <code>BGLocationTrackingPlugin.m</code> files to your <code>Classes</code> folder and <code>BGLocationTrackingPlugin.js</code> file to <code>www/js/plugins</code> folder.
 
 Add js file to your <code>index.html</code>.
 

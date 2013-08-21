@@ -10,7 +10,6 @@ var BGLocationTracking = {
     
 
     startUpdatingLocation: function( callbackSuccess, callbackStart, callbackError ) {
-        //@TODO convert callback's name in string
         cordova.exec( callbackStart, callbackError, "BGLocationTracking", "startUpdatingLocation", [callbackSuccess] );
     },
     

@@ -3,7 +3,7 @@
 //  BGLocationTracking
 //
 //  Created by Alex Shmaliy on 8/20/13.
-//  Copyright (c) 2013 ASHM. All rights reserved.
+//  MIT Licensed
 //
 
 #import "BGLocationTracking.h"

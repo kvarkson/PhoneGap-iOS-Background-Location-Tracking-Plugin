@@ -16,9 +16,20 @@ Add js file to your index.html. Then add the following code to your config.xml:
 
 #Using the plugin
 
-When the apps recives <code>Pause</code> event you need to call <code>startTraking()</code> function. 
+When the apps recives <code>Pause</code> event you need to call <code>startUpdatingLocation()</code> function. 
+######Example
+	function onPause() {
+		startUpdatingLocation('yourCallbackFunction');	
+	}
 
-After getting <code>Resume</code> event just call <code>stopTraking()</code> function.
+	function yourCallbackFunction( result ) {
+		console.log( result.coords.latitude );
+		console.log( result.coords.longitude );
+	}
+
+NOTE: The string name of the callback function soon will be replace with it regular signature.
+
+After getting <code>Resume</code> event just call <code>stopUpdatingLocation()</code> function.
 
 #License
 

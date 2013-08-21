@@ -50,13 +50,18 @@
     
     [self.delegate locationDidUpdate:newLocation];
     
-    [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"%@({ coords: { latitude: %f, longitude: %f}});", self.successCB, newLocation.coordinate.latitude, newLocation.coordinate.longitude ]];
+    [self callSuccessJSCalback:newLocation.coordinate.latitude :newLocation.coordinate.longitude];
     
     // stop location manager
     [self stopUpdatingLocation:[[CDVInvokedUrlCommand alloc] init]];
     
     // TODO: need to re-init location manager with some delay
     [self reInitAndStartLocationManager];
+}
+
+- (void)callSuccessJSCalback:(double)lat :(double)lon {
+    [self.webView stringByEvaluatingJavaScriptFromString:
+        [NSString stringWithFormat:@"%@({ coords: { latitude: %f, longitude: %f}});", self.successCB, lat, lon ]];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {

@@ -1,39 +1,21 @@
 //
-//  BGLocationTrackingPlugin.js
+//  BGLocationTracking.js
 //  
 //
 //  Created by Stas Gorodnichenko on 20/08/13.
 //  MIT Licensed
 //
 
-function BGLocationTrackingPlugin()
-{
-	console.log('creating plugin');
-};
-
-BGLocationTrackingPlugin.prototype.startTraking = function(message, url)
-{
-	cordova.exec(null, null, "BGLocationTrackingPlugin", "start", [message, url]);
+var BGLocationTracking = {
     
-};
 
-
-BGLocationTrackingPlugin.prototype.stopTraking = function( callback )
-{
-
-    cordova.exec(callback, null, "BGLocationTrackingPlugin", "stopTraking", [] );
-};
-
-
-BGLocationTrackingPlugin.install = function()
-{
-    if(!window.plugins)
-    {
-        window.plugins = {};	
+    startUpdatingLocation: function( callbackSuccess, callbackStart, callbackError ) {
+        //@TODO convert callback's name in string
+        cordova.exec( callbackStart, callbackError, "BGLocationTracking", "startUpdatingLocation", [callbackSuccess] );
+    },
+    
+    stopUpdatingLocation: function( callbackStop, callbackError ) {
+        cordova.exec( callbackStop, callbackError, "BGLocationTracking", "stopUpdatingLocation", [] );
     }
 
-    window.plugins.bgLocationTracking = new BGLocationTrackingPlugin();
-    return window.plugins.bgLocationTracking;
 };
-
-cordova.addConstructor(BGLocationTrackingPlugin.install);

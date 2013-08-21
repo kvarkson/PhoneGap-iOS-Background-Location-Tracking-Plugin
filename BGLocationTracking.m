@@ -13,19 +13,21 @@
 - (void)reInitAndStartLocationManager;
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
+@property (strong, nonatomic) CDVInvokedUrlCommand *successCB;
 
 @end
 
 
 @implementation BGLocationTracking
-@synthesize locationManager, delegate;
+@synthesize locationManager, delegate, successCB;
 
 - (void)startUpdatingLocation:(CDVInvokedUrlCommand *)command {
     [self reInitAndStartLocationManager];
+    self.successCB = [command.arguments objectAtIndex:0];
 }
 
 - (void)stopUpdatingLocation:(CDVInvokedUrlCommand *)command {
-    NSLog(@"stopUpdatingLocation");
+    //NSLog(@"stopUpdatingLocation");
     
     if (self.locationManager) {
         [self.locationManager stopUpdatingLocation];
@@ -40,13 +42,15 @@
     
     self.locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
-    locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
+    locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
     [locationManager startUpdatingLocation];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
     
     [self.delegate locationDidUpdate:newLocation];
+    
+    [self.webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"%@({ coords: { latitude: %f, longitude: %f}});", self.successCB, newLocation.coordinate.latitude, newLocation.coordinate.longitude ]];
     
     // stop location manager
     [self stopUpdatingLocation:[[CDVInvokedUrlCommand alloc] init]];

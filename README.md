@@ -1,7 +1,7 @@
 PhoneGap-iOS-Background-Location-Tracking-Plugin
 ================================================
 
-If you need to track a user's location in background this plugin does exactly that. The location updates with an accuracy <code>kCLLocationAccuracyNearestTenMeters</code> and <code>distanceFilter = 10.0</code> (in meters). Baically the plugin will return new location any 10 meters. 
+If you need to track a user's location in background this plugin does exactly that. The location updates with an accuracy <code>kCLLocationAccuracyNearestTenMeters</code> and <code>distanceFilter = 10.0</code> (in meters). Basically the plugin will return new location any 10 meters. 
 
 #Installing the plugin
 

@@ -16,18 +16,20 @@
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) CDVInvokedUrlCommand *successCB;
+@property (strong, nonatomic) CDVInvokedUrlCommand *errorCB;
 @property (strong, nonatomic) NSDate *locationManagerCreationDate;
 
 @end
 
 
 @implementation BGLocationTracking
-@synthesize locationManager, delegate, successCB;
+@synthesize locationManager, delegate, successCB, errorCB;
 @synthesize locationManagerCreationDate;
 
 - (void)startUpdatingLocation:(CDVInvokedUrlCommand *)command {
     [self initAndStartLocationManager];
     self.successCB = [command.arguments objectAtIndex:0];
+    self.errorCB = [command.arguments objectAtIndex:1];
 }
 
 - (void)stopUpdatingLocation:(CDVInvokedUrlCommand *)command {
@@ -48,7 +50,7 @@
     self.locationManagerCreationDate = [NSDate date];
     locationManager.delegate = self;
     locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
-    locationManager.distanceFilter = 20.0;
+    locationManager.distanceFilter = 10.0;
     locationManager.activityType = CLActivityTypeFitness;
     [locationManager startUpdatingLocation];
 }
@@ -66,17 +68,22 @@
     }
 }
 
-- (void)callSuccessJSCalback:(CLLocation *)location {
-    [self.webView stringByEvaluatingJavaScriptFromString:
-        [NSString stringWithFormat:@"%@({ coords: { latitude: %f, longitude: %f}});", self.successCB, location.coordinate.latitude, location.coordinate.longitude ]];
-}
-
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
     
     [self.delegate locationDidFailWithError:error];
-    NSLog(@"%@", error);
+    [self callErrorJSCalback:error];
     
     [self initAndStartLocationManager];
+}
+
+- (void)callSuccessJSCalback:(CLLocation *)location {
+    [self.webView stringByEvaluatingJavaScriptFromString:
+     [NSString stringWithFormat:@"%@({ coords: { latitude: %f, longitude: %f}});", self.successCB, location.coordinate.latitude, location.coordinate.longitude ]];
+}
+
+- (void)callErrorJSCalback:(NSError *)error {
+    [self.webView stringByEvaluatingJavaScriptFromString:
+     [NSString stringWithFormat:@"%@({ message: '%@' });", self.errorCB, error.localizedDescription ]];
 }
 
 @end

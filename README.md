@@ -9,7 +9,7 @@ Copy <code>BGLocationTrackingPlugin.h</code> and <code>BGLocationTrackingPlugin.
 
 Add js file to your <code>index.html</code>.
 
-	<script type="text/javascript" src="js/plugins/BGLocationTracking.js"></script>
+    <script type="text/javascript" src="js/plugins/BGLocationTracking.js"></script>
 
 Then add the following code to your <code>config.xml</code>:
 
@@ -23,20 +23,27 @@ Then add the following code to your <code>config.xml</code>:
 When the apps recives <code>Pause</code> event you need to call <code>startUpdatingLocation()</code> function. 
 ######Example
 	
-	document.addEventListener( "pause", onPause, false );
+    // start listening "pause" and "resume" events and give them specific callbacks
+    document.addEventListener( "pause", onPause, false );
     document.addEventListener( "resume", onResume, false );
 
+    // success callback function
     function yourCallbackFunction( result ) {
     	// your coordinates
-		console.log( result.coords.latitude );
-		console.log( result.coords.longitude );
+        console.log( result.coords.latitude );
+        console.log( result.coords.longitude );
+    };
+    
+    // error callback function (optional)
+    function yourErrorCallback( result ) {
+        console.log( result.message );
+    };
+    
+    function onPause() {
+        BGLocationTracking.startUpdatingLocation( yourCallbackFunction, yourErrorCallback );	
 	};
-
-	function onPause() {
-		BGLocationTracking.startUpdatingLocation( yourCallbackFunction );	
-	};
-
-	function onResume() {
+    
+    function onResume() {
         BGLocationTracking.stopUpdatingLocation();
     };
 
@@ -45,6 +52,9 @@ When the apps recives <code>Pause</code> event you need to call <code>startUpdat
 You can specify the callback by name or just pass an anonymous function. It will work fine either way.
 
 After getting <code>Resume</code> event just call <code>stopUpdatingLocation()</code> function.
+
+#TODOS
+I'm going to add a working xCode project with example of the plugin's functionality soon.
 
 #License
 

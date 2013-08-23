@@ -9,6 +9,8 @@
 #import "BGLocationTracking.h"
 
 #define LOCATION_MANAGER_LIFETIME_MAX (14 * 60) // in seconds
+#define DISTANCE_FILTER_IN_METERS 10.0
+#define MINIMUM_DISTANCE_BETWEEN_DIFFERENT_LOCATIONS 1.0
 
 @interface BGLocationTracking ()
 
@@ -23,13 +25,14 @@
 
 
 @implementation BGLocationTracking
-@synthesize locationManager, delegate, successCB, errorCB;
+@synthesize locationManager, successCB, errorCB;
 @synthesize locationManagerCreationDate;
 
 - (void)startUpdatingLocation:(CDVInvokedUrlCommand *)command {
     [self initAndStartLocationManager];
-    self.successCB = [command.arguments objectAtIndex:0];
-    self.errorCB = [command.arguments objectAtIndex:1];
+    NSUInteger argumentsCount = command.arguments.count;
+    self.successCB = argumentsCount ? command.arguments[0] : nil;
+    self.errorCB = (argumentsCount > 1) ? command.arguments[1] : nil;
 }
 
 - (void)stopUpdatingLocation:(CDVInvokedUrlCommand *)command {
@@ -44,23 +47,26 @@
 
 - (void)initAndStartLocationManager {
     
-    [self stopUpdatingLocation:[[CDVInvokedUrlCommand alloc] init]];
+    [self stopUpdatingLocation:nil];
     
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManagerCreationDate = [NSDate date];
     locationManager.delegate = self;
     locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
-    locationManager.distanceFilter = 10.0;
+    locationManager.distanceFilter = DISTANCE_FILTER_IN_METERS;
     locationManager.activityType = CLActivityTypeFitness;
     [locationManager startUpdatingLocation];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
     
-    [self.delegate locationDidUpdate:newLocation];
-    
-    [self callSuccessJSCalback:newLocation];
-    
+    if ([newLocation distanceFromLocation:oldLocation] >= MINIMUM_DISTANCE_BETWEEN_DIFFERENT_LOCATIONS) {
+        [self callSuccessJSCalback:newLocation];
+    }
+    else {
+        NSLog(@"New location is almost equal to old location. Ignore update");
+    }
+
     // if location manager is very old, need to re-init
     NSDate *currentDate = [NSDate date];
     if ([currentDate timeIntervalSinceDate:self.locationManagerCreationDate] >= LOCATION_MANAGER_LIFETIME_MAX) {
@@ -69,8 +75,7 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    
-    [self.delegate locationDidFailWithError:error];
+
     [self callErrorJSCalback:error];
     
     [self initAndStartLocationManager];

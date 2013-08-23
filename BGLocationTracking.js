@@ -7,21 +7,31 @@
 //
 
 var successCallBackFunction,
+    errorCallBackFunction,
     successCallBackName = 'successCallBackFunction',
+    errorCallBackName = 'errorCallBackFunction',
     BGLocationTracking = {
     
-startUpdatingLocation: function( callbackSuccess, callbackStart, callbackError ) {
+startUpdatingLocation: function( callbackSuccess , callbackError ) {
     if ( typeof callbackSuccess === 'function' ) {
+        
         if ( callbackSuccess.name === '' ) {
             successCallBackFunction = function( result ) { callbackSuccess(result); };
         } else {
             successCallBackName = callbackSuccess.name;
         }
-        console.log(successCallBackName);
-        cordova.exec( callbackStart, callbackError, "BGLocationTracking", "startUpdatingLocation", [successCallBackName] );
+        
+        if ( ( typeof callbackError === 'function') ) {
+            if (  callbackError.name === '') {
+                errorCallBackFunction = function( result ) { callbackError(result); };
+            } else {
+                errorCallBackName = callbackError.name;
+            }
+        }
+        
+        cordova.exec( null, callbackError, "BGLocationTracking", "startUpdatingLocation", [successCallBackName, errorCallBackName] );
     } else {
-        console.log('Wrong callback signature!');
-        callbackError.call();
+        callbackError.call({ message: 'invalid signature of the success callback function' });
     }
 },
     

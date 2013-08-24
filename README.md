@@ -20,7 +20,7 @@ Then add the following code to your <code>config.xml</code>:
 
 #Using the plugin
 
-When the apps recives <code>Pause</code> event you need to call <code>startUpdatingLocation()</code> function. 
+When the apps receives <code>Pause</code> event you need to call <code>startUpdatingLocation()</code> function. 
 ######Example
 	
     // start listening "pause" and "resume" events and give them specific callbacks
@@ -54,7 +54,8 @@ You can specify the callback by name or just pass an anonymous function. It will
 After getting <code>Resume</code> event just call <code>stopUpdatingLocation()</code> function.
 
 #TODOS
-I'm going to add a working xCode project with example of the plugin's functionality soon.
+I'm going to add a working xCode project with an example of the plugin's functionality soon.
+####Pull requests are welcome! :)
 
 #License
 

@@ -53,10 +53,6 @@ You can specify the callback by name or just pass an anonymous function. It will
 
 After getting <code>Resume</code> event just call <code>stopUpdatingLocation()</code> function.
 
-#TODOS
-I'm going to add a working xCode project with an example of the plugin's functionality soon.
-####Pull requests are welcome! :)
-
 #License
 
 The MIT License

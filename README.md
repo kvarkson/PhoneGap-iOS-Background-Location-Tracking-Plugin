@@ -53,6 +53,9 @@ You can specify the callback by name or just pass an anonymous function. It will
 
 After getting <code>Resume</code> event just call <code>stopUpdatingLocation()</code> function.
 
+### NOTICE
+You need to move so the success callback function could be fired up by iOS. So try to go for a walk with your device and you'll see the result :)
+
 #License
 
 The MIT License

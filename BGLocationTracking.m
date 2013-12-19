@@ -54,7 +54,10 @@
     locationManager.delegate = self;
     locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
     locationManager.distanceFilter = DISTANCE_FILTER_IN_METERS;
-    locationManager.activityType = CLActivityTypeFitness;
+    // 'activityType' available in iOS 6 +
+    if ([locationManager respondsToSelector:@selector(activityType)]) {
+        locationManager.activityType = CLActivityTypeFitness;
+    }
     [locationManager startUpdatingLocation];
 }
 
